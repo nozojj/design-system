@@ -1,0 +1,82 @@
+/* ========================================
+   1. プリミティブ：生の値（直接は使わない）
+   ======================================== */
+:root {
+  --ds-gray-0: #ffffff;
+  --ds-gray-50: #f8f9fa;
+  --ds-gray-100: #f1f3f5;
+  --ds-gray-200: #e5e7eb;
+  --ds-gray-300: #d1d5db;
+  --ds-gray-500: #6b7280;
+  --ds-gray-700: #374151;
+  --ds-gray-800: #1f2937;
+  --ds-gray-900: #111827;
+  --ds-gray-950: #0b0f17;
+
+  --ds-blue-300: #93c5fd;
+  --ds-blue-400: #60a5fa;
+  --ds-blue-500: #3b82f6;
+  --ds-blue-600: #2563eb;
+  --ds-blue-700: #1d4ed8;
+
+  --ds-red-400: #f87171;
+  --ds-red-600: #dc2626;
+
+  /* 余白（4px刻み） */
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-5: 20px;
+  --ds-space-6: 24px;
+
+  /* 角丸 */
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 6px;
+  --ds-radius-lg: 8px;
+  --ds-radius-full: 9999px;
+
+  /* 文字 */
+  --ds-font-sans:
+    system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP",
+    sans-serif;
+  --ds-font-size-sm: 0.875rem;
+  --ds-font-size-md: 1rem;
+  --ds-font-size-lg: 1.125rem;
+  --ds-font-weight-medium: 500;
+
+  /* アニメーション */
+  --ds-duration-fast: 120ms;
+}
+
+/* ========================================
+   2. セマンティック：用途で名前を付ける（コンポーネントはこちらを使う）
+   ======================================== */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --ds-color-bg: var(--ds-gray-0);
+  --ds-color-bg-subtle: var(--ds-gray-100);
+  --ds-color-fg: var(--ds-gray-900);
+  --ds-color-fg-muted: var(--ds-gray-500);
+  --ds-color-border: var(--ds-gray-200);
+  --ds-color-accent: var(--ds-blue-600);
+  --ds-color-accent-hover: var(--ds-blue-700);
+  --ds-color-on-accent: var(--ds-gray-0);
+  --ds-color-danger: var(--ds-red-600);
+  --ds-color-focus-ring: var(--ds-blue-500);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --ds-color-bg: var(--ds-gray-950);
+  --ds-color-bg-subtle: var(--ds-gray-800);
+  --ds-color-fg: var(--ds-gray-50);
+  --ds-color-fg-muted: var(--ds-gray-300);
+  --ds-color-border: var(--ds-gray-700);
+  --ds-color-accent: var(--ds-blue-400);
+  --ds-color-accent-hover: var(--ds-blue-300);
+  --ds-color-on-accent: var(--ds-gray-950);
+  --ds-color-danger: var(--ds-red-400);
+  --ds-color-focus-ring: var(--ds-blue-400);
+}
