@@ -3,7 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+    "scripts": {
+    "build": "pnpm --filter @ds/ui build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm --filter docs lint",
+    "build-storybook": "pnpm --filter docs build-storybook"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
