@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button } from "@ds/ui";
+import { expect, fn, userEvent, within } from "storybook/test";
+import { Button, type ButtonProps } from "@ds/ui";
 
 const meta = {
   title: "Components/Button",
@@ -9,6 +11,8 @@ const meta = {
     variant: "primary",
     size: "md",
     disabled: false,
+    loading: false,
+    onClick: fn(),
   },
   argTypes: {
     variant: {
@@ -20,6 +24,7 @@ const meta = {
       options: ["sm", "md", "lg"],
     },
     disabled: { control: "boolean" },
+    loading: { control: "boolean" },
   },
 } satisfies Meta<typeof Button>;
 
@@ -56,4 +61,40 @@ export const Sizes: Story = {
       </Button>
     </div>
   ),
+};
+
+export const Loading: Story = {
+  args: { loading: true, children: "保存する" },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button", { name: "保存する" });
+
+    // 読み上げ用の名前は残り、処理中であることが伝わる
+    await expect(button).toHaveAttribute("aria-busy", "true");
+    await expect(button).toHaveAttribute("aria-disabled", "true");
+
+    // クリックしても onClick は呼ばれない
+    await userEvent.click(button);
+    await expect(args.onClick).not.toHaveBeenCalled();
+  },
+};
+
+function LoadingDemo(args: ButtonProps) {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    setTimeout(() => setLoading(false), 2000);
+  };
+
+  return (
+    <Button {...args} loading={loading} onClick={handleClick}>
+      保存する
+    </Button>
+  );
+}
+
+export const LoadingOnClick: Story = {
+  name: "Loading（クリックで試す）",
+  render: (args) => <LoadingDemo {...args} />,
 };

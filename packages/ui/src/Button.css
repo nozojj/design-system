@@ -8,6 +8,7 @@
   font-family: var(--ds-font-sans);
   font-weight: var(--ds-font-weight-medium);
   line-height: 1;
+  position: relative;
   white-space: nowrap;
   cursor: pointer;
   transition:
@@ -49,7 +50,7 @@
   background-color: var(--ds-color-accent);
   color: var(--ds-color-on-accent);
 }
-.ds-button[data-variant="primary"]:hover:not(:disabled) {
+.ds-button[data-variant="primary"]:hover:not(:disabled, [aria-busy="true"]) {
   background-color: var(--ds-color-accent-hover);
 }
 
@@ -58,7 +59,7 @@
   border-color: var(--ds-color-border);
   color: var(--ds-color-fg);
 }
-.ds-button[data-variant="secondary"]:hover:not(:disabled) {
+.ds-button[data-variant="secondary"]:hover:not(:disabled, [aria-busy="true"]) {
   background-color: var(--ds-color-bg-subtle);
 }
 
@@ -66,6 +67,47 @@
   background-color: transparent;
   color: var(--ds-color-fg);
 }
-.ds-button[data-variant="ghost"]:hover:not(:disabled) {
+.ds-button[data-variant="ghost"]:hover:not(:disabled, [aria-busy="true"]) {
   background-color: var(--ds-color-bg-subtle);
+}
+
+/* ---------- ローディング ---------- */
+.ds-button__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+}
+
+.ds-button[aria-busy="true"] {
+  cursor: progress;
+}
+
+/* ラベルは透明にするだけで残す（ボタンの幅を保ち、読み上げ用の名前も残すため） */
+.ds-button[aria-busy="true"] .ds-button__label {
+  opacity: 0;
+}
+
+.ds-button__spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--ds-radius-full);
+  animation: ds-spin 0.7s linear infinite;
+}
+
+@keyframes ds-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 動きを減らす設定のユーザーには、ゆっくり回す */
+@media (prefers-reduced-motion: reduce) {
+  .ds-button__spinner {
+    animation-duration: 1.5s;
+  }
 }
