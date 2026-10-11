@@ -7,7 +7,8 @@
     "build": "pnpm --filter @ds/ui build",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm --filter docs lint",
-    "build-storybook": "pnpm --filter docs build-storybook"
+    "build-storybook": "pnpm --filter docs build-storybook",
+    "test": "pnpm --filter docs exec vitest --project=storybook --run"
   },
   "keywords": [],
   "author": "",

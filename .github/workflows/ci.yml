@@ -28,6 +28,18 @@ jobs:
       - name: Build @ds/ui
         run: pnpm build
 
+              - name: Build @ds/ui
+        run: pnpm build
+
+      - name: Install Playwright browser
+        run: pnpm --filter docs exec playwright install --with-deps chromium
+
+      - name: Test (interaction + a11y)
+        run: pnpm test
+
+      - name: Typecheck
+        run: pnpm typecheck
+
       - name: Typecheck
         run: pnpm typecheck
 
