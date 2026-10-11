@@ -17,11 +17,11 @@ design-system/
    └─ docs/     # Storybook
 ```
 
-| パッケージ | 役割 |
-|---|---|
+| パッケージ   | 役割                                                                   |
+| ------------ | ---------------------------------------------------------------------- |
 | `@ds/tokens` | 色・余白・角丸・文字などのデザイントークン。ライト／ダークテーマに対応 |
-| `@ds/ui` | Reactコンポーネント。tsupでESM＋型定義＋CSSにビルド |
-| `docs` | Storybookによるコンポーネントのカタログとa11yチェック |
+| `@ds/ui`     | Reactコンポーネント。tsupでESM＋型定義＋CSSにビルド                    |
+| `docs`       | Storybookによるコンポーネントのカタログとa11yチェック                  |
 
 ## 技術スタック
 
@@ -29,6 +29,7 @@ design-system/
 - pnpm workspace
 - tsup（ライブラリのビルド）
 - Storybook 10（Vite）＋ a11yアドオン
+- Vitest ＋ Playwright（Storybookのストーリーをそのままテストとして実行）
 - ESLint
 - GitHub Actions（CI）
 
@@ -59,7 +60,16 @@ design-system/
 
 - `:focus-visible` で、キーボード操作のときだけフォーカスリングを表示
 - Button の `type` の初期値を `"button"` にし、フォーム内での意図しない送信を防止
-- Storybook の a11y アドオンで、ライト／ダーク両方の違反をチェック
+- Button の loading 中は `disabled` ではなく `aria-disabled` を使い、フォーカスを失わせずにクリックだけを無効化。`aria-busy` で処理中であることを伝える
+- loading 中もラベルは `opacity: 0` で残し、ボタンの幅と読み上げ用の名前を保つ
+- TextField はラベルを必須の prop にし、説明文とエラーを `aria-describedby` で入力欄に紐づける
+- エラーのスタイルは `[aria-invalid="true"]` に当て、見た目とa11yの状態が必ず一致するようにした
+
+### テストとCI
+
+- Storybook のストーリーに `play` 関数で操作テストを書き、ストーリーがそのままテストになる構成
+- axe による a11y チェックを `error` に設定し、違反があると CI が失敗する
+- push のたびに、ビルド・テスト・型チェック・lint・Storybook のビルドを GitHub Actions で実行
 
 ## 開発
 
@@ -77,6 +87,7 @@ CIと同じチェックを手元で実行する場合：
 
 ```bash
 pnpm build
+pnpm test
 pnpm typecheck
 pnpm lint
 pnpm build-storybook
@@ -89,13 +100,13 @@ pnpm build-storybook
 
 ## ロードマップ
 
-- [x] Button
-- [ ] TextField
+- [x] Button（variant・size・loading）
+- [x] TextField（ラベル・説明・エラーの紐づけ）
+- [x] インタラクションテスト＋a11yチェック（Storybook + Vitest、CIで実行）
 - [ ] Checkbox / Switch
 - [ ] Dialog（フォーカストラップ、Escで閉じる、フォーカスの復帰）
 - [ ] Tabs（矢印キーでの移動）
 - [ ] Menu
 - [ ] Combobox（WAI-ARIAパターン準拠、非同期検索）
 - [ ] Toast（`aria-live`）
-- [ ] インタラクションテスト（Storybook + Vitest）
 - [ ] Storybookの公開
