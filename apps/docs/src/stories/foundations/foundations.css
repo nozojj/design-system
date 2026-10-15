@@ -32,7 +32,7 @@
   font-family: var(--ds-font-ui);
 }
 
-.fd-panel h3 {
+.fd-panel > h3 {
   margin: 0 0 12px;
   font-size: 0.8125rem;
   font-family: var(--ds-font-mono);

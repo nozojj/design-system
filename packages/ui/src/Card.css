@@ -1,0 +1,107 @@
+/* Card は v0.2 の役割トークンだけを使う最初の部品 */
+
+.ds-card {
+  --ds-card-padding: 20px;
+  --ds-card-gap: 12px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-card-gap);
+  padding: var(--ds-card-padding);
+  border: 1px solid var(--ds-color-line);
+  border-radius: var(--ds-radius-md);
+  background-color: var(--ds-color-surface);
+  color: var(--ds-color-ink);
+  font-family: var(--ds-font-ui);
+  transition: border-color var(--ds-duration-fast);
+}
+
+.ds-card[data-size="lg"] {
+  --ds-card-padding: 32px;
+  --ds-card-gap: 16px;
+}
+
+/* ---------- 見出し ---------- */
+.ds-card__title {
+  margin: 0;
+  font-family: var(--ds-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-stretch: 112%;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.ds-card[data-size="lg"] .ds-card__title {
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  line-height: 1.1;
+}
+
+/* ---------- 本文 ---------- */
+.ds-card__body {
+  font-size: var(--ds-font-size-sm);
+  line-height: 1.7;
+}
+
+.ds-card__body > :first-child {
+  margin-top: 0;
+}
+
+.ds-card__body > :last-child {
+  margin-bottom: 0;
+}
+
+.ds-card[data-size="lg"] .ds-card__body {
+  font-size: var(--ds-font-size-md);
+}
+
+/* ---------- 操作 ---------- */
+.ds-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-2);
+  align-items: center;
+  margin-top: auto; /* 並べたカードの高さが違っても、操作の位置を下に揃える */
+  padding-top: var(--ds-space-1);
+}
+
+/* ---------- 見出しがリンクのとき：カード全体を押せるようにする ---------- */
+.ds-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* リンクの当たり判定をカード全体に広げる。要素は増やさない */
+.ds-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* 操作はリンクの当たり判定より手前に置き、個別に押せるようにする */
+.ds-card__actions {
+  position: relative;
+  z-index: 1;
+}
+
+.ds-card:has(.ds-card__link):hover {
+  border-color: var(--ds-color-ink-muted);
+}
+
+.ds-card:has(.ds-card__link):hover .ds-card__link {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+}
+
+/* フォーカスリングはリンクではなくカードの外周に出す */
+.ds-card__link:focus-visible {
+  outline: none;
+}
+
+.ds-card:has(.ds-card__link:focus-visible) {
+  outline: 2px solid var(--ds-color-ink);
+  outline-offset: 2px;
+}
