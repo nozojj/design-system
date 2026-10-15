@@ -1,0 +1,266 @@
+/* Foundations のページ専用の見た目。役割トークンだけを使う */
+
+.fd-page {
+  display: grid;
+  gap: 40px;
+  max-width: 1080px;
+  font-family: var(--ds-font-ui);
+  color: var(--ds-color-ink);
+}
+
+.fd-page h2 {
+  margin: 0 0 4px;
+  font-family: var(--ds-font-display);
+  font-size: 1.5rem;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+
+.fd-lead {
+  margin: 0 0 16px;
+  color: var(--ds-color-ink-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* テーマを固定して並べるための面 */
+.fd-panel {
+  padding: 20px;
+  border-radius: 8px;
+  background: var(--ds-color-canvas);
+  color: var(--ds-color-ink);
+  font-family: var(--ds-font-ui);
+}
+
+.fd-panel h3 {
+  margin: 0 0 12px;
+  font-size: 0.8125rem;
+  font-family: var(--ds-font-mono);
+  font-weight: 500;
+  color: var(--ds-color-ink-muted);
+}
+
+.fd-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+  gap: 16px;
+}
+
+/* ---------- 色の一覧 ---------- */
+.fd-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fd-swatch {
+  display: grid;
+  grid-template-rows: 56px auto;
+  overflow: hidden;
+  border: 1px solid var(--ds-color-line);
+  border-radius: 6px;
+  background: var(--ds-color-surface);
+}
+
+.fd-swatch__chip {
+  background: var(--fd-value);
+}
+
+.fd-swatch__body {
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px 10px;
+}
+
+.fd-swatch__name {
+  font-family: var(--ds-font-mono);
+  font-size: 0.75rem;
+}
+
+.fd-swatch__use {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--ds-color-ink-muted);
+}
+
+/* ---------- 書体 ---------- */
+.fd-type {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+}
+
+.fd-type > div {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ds-color-line);
+}
+
+.fd-type dt {
+  font-family: var(--ds-font-mono);
+  font-size: 0.75rem;
+  color: var(--ds-color-ink-muted);
+}
+
+.fd-type dd {
+  margin: 0;
+}
+
+.fd-type__display {
+  font-family: var(--ds-font-display);
+  font-size: 2.25rem;
+  font-stretch: 112%;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.fd-type__ui {
+  font-family: var(--ds-font-ui);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.fd-type__mono {
+  font-family: var(--ds-font-mono);
+  font-size: 0.9375rem;
+}
+
+/* ---------- コントラスト表 ---------- */
+.fd-contrast {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.fd-contrast th,
+.fd-contrast td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--ds-color-line);
+  text-align: left;
+}
+
+.fd-contrast th {
+  font-weight: 500;
+  color: var(--ds-color-ink-muted);
+}
+
+.fd-contrast code {
+  font-family: var(--ds-font-mono);
+  font-size: 0.75rem;
+}
+
+.fd-contrast__sample {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.fd-contrast__ratio {
+  font-family: var(--ds-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 役割だけで組んだ見本 ---------- */
+.fd-specimen {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--ds-color-line);
+  border-radius: 6px;
+  background: var(--ds-color-surface);
+}
+
+.fd-specimen__eyebrow {
+  margin: 0;
+  font-family: var(--ds-font-mono);
+  font-size: 0.75rem;
+  color: var(--ds-color-ink-muted);
+}
+
+.fd-specimen__title {
+  margin: 0;
+  font-family: var(--ds-font-display);
+  font-size: 1.75rem;
+  font-stretch: 112%;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.fd-specimen__body {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.fd-specimen__specs {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: var(--ds-color-surface-sunken);
+  font-family: var(--ds-font-mono);
+  font-size: 0.8125rem;
+}
+
+.fd-specimen__specs div {
+  display: flex;
+  gap: 6px;
+}
+
+.fd-specimen__specs dt {
+  color: var(--ds-color-ink-muted);
+}
+
+.fd-specimen__specs dd {
+  margin: 0;
+}
+
+.fd-specimen__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.fd-specimen__option {
+  height: 36px;
+  padding-inline: 12px;
+  border: 1px solid var(--ds-color-ink-muted);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ds-color-ink);
+  font: inherit;
+  font-size: 0.8125rem;
+}
+
+.fd-specimen__option[aria-pressed="true"] {
+  border-color: var(--ds-role-receive);
+  background: var(--ds-role-receive);
+  color: var(--ds-role-on-receive);
+}
+
+.fd-specimen__give {
+  height: 40px;
+  margin-left: auto;
+  padding-inline: 16px;
+  border: 1px solid var(--ds-color-ink);
+  border-radius: 4px;
+  background: var(--ds-role-give);
+  color: var(--ds-role-on-give);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.fd-specimen__link {
+  color: var(--ds-role-receive);
+  font-size: 0.8125rem;
+}
