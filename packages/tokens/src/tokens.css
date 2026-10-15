@@ -47,36 +47,105 @@
 
   /* アニメーション */
   --ds-duration-fast: 120ms;
+
+  /* ---- v0.2 で追加：ニュートラル（わずかに青紫を含むグレー） ---- */
+  --ds-neutral-50: #fbfbfd;
+  --ds-neutral-100: #efeef3;
+  --ds-neutral-200: #e4e2ec;
+  --ds-neutral-300: #d3d0df;
+  --ds-neutral-400: #a29fb8;
+  --ds-neutral-600: #5b5870;
+  --ds-neutral-800: #2f2c3e;
+  --ds-neutral-850: #22202e;
+  --ds-neutral-900: #17161f;
+  --ds-neutral-950: #0d0c14;
+
+  /* ---- v0.2 で追加：少量だけ使うアクセント ---- */
+  --ds-lime-300: #c6ff3d;
+  --ds-lime-950: #1a2300;
+
+  --ds-indigo-300: #8d86ff;
+  --ds-indigo-600: #4b3fe0;
+  --ds-indigo-950: #12103a;
+
+  /* ---- v0.2 で追加：書体 ---- */
+  /* 欧文は Archivo / JetBrains Mono、和文は BIZ UDゴシックに落ちる並び。
+     フォントの読み込みは使う側で行う（読み込まなくても末尾の書体で表示できる） */
+  --ds-typeface-archivo: "Archivo";
+  --ds-typeface-mono: "JetBrains Mono";
+  --ds-typeface-jp: "BIZ UDGothic", "Hiragino Sans", "Noto Sans JP";
 }
 
 /* ========================================
-   2. セマンティック：用途で名前を付ける（コンポーネントはこちらを使う）
+   2. 役割（v0.2）：部品やページはこの名前を使う
+   ----------------------------------------
+   ・値は「既定テーマ」。サイトごとに :root やテーマ用のセレクタで上書きしてよい
+   ・light-dark() で、ライトとダークの値を1か所にまとめている。
+     どちらが使われるかは color-scheme で決まる（下の「テーマの切り替え」）
+   ・:root だけでなく [data-theme] にも書くのは、ページの一部だけテーマを変えたときに、
+     その要素で値を決め直すため（ビルド時に light-dark() が変数に置き換えられても崩れない）
+   ・サイト側で上書きするときも同じく「対象のセレクタ」と「その中の [data-theme]」の両方に書く
    ======================================== */
 :root,
+[data-theme] {
+  /* 面 */
+  --ds-color-canvas: light-dark(var(--ds-neutral-100), var(--ds-neutral-950)); /* ページの地 */
+  --ds-color-surface: light-dark(var(--ds-neutral-50), var(--ds-neutral-900)); /* 地より一段手前の面 */
+  --ds-color-surface-sunken: light-dark(var(--ds-neutral-200), var(--ds-neutral-850)); /* 地より一段奥の面 */
+  --ds-color-line: light-dark(var(--ds-neutral-300), var(--ds-neutral-800)); /* 区切り線（装飾。部品の輪郭には使わない） */
+
+  /* インク：文字と、強い塗り */
+  --ds-color-ink: light-dark(var(--ds-neutral-900), var(--ds-neutral-100));
+  --ds-color-ink-muted: light-dark(var(--ds-neutral-600), var(--ds-neutral-400));
+  --ds-color-on-ink: light-dark(var(--ds-neutral-50), var(--ds-neutral-900)); /* インクで塗った面の上の文字 */
+
+  /* 関係の役割 */
+  /* give：送り出す側・行動を促す側（追加する、決定する）。塗りとして使い、文字色には使わない */
+  --ds-role-give: var(--ds-lime-300);
+  --ds-role-on-give: var(--ds-lime-950);
+  /* receive：受け取る側・選ばれている側・基準になる側。文字色としても使える */
+  --ds-role-receive: light-dark(var(--ds-indigo-600), var(--ds-indigo-300));
+  --ds-role-on-receive: light-dark(var(--ds-neutral-50), var(--ds-indigo-950));
+
+  /* 書体の役割 */
+  --ds-font-display: var(--ds-typeface-archivo), var(--ds-typeface-jp), system-ui, sans-serif; /* 見出し・大きな数字 */
+  --ds-font-ui: var(--ds-typeface-archivo), var(--ds-typeface-jp), system-ui, sans-serif; /* 本文・ラベル・操作 */
+  --ds-font-mono: var(--ds-typeface-mono), var(--ds-typeface-jp), ui-monospace, monospace; /* 寸法・価格・コード */
+}
+
+/* ========================================
+   3. セマンティック（v0.1）：既存の部品が使っている名前
+   ----------------------------------------
+   名前と値はそのまま。Button / TextField を役割の名前へ移すのは別の PR で行う
+   ======================================== */
+:root,
+[data-theme] {
+  --ds-color-bg: light-dark(var(--ds-gray-0), var(--ds-gray-950));
+  --ds-color-bg-subtle: light-dark(var(--ds-gray-100), var(--ds-gray-800));
+  --ds-color-fg: light-dark(var(--ds-gray-900), var(--ds-gray-50));
+  --ds-color-fg-muted: light-dark(var(--ds-gray-500), var(--ds-gray-300));
+  --ds-color-border: light-dark(var(--ds-gray-200), var(--ds-gray-700));
+  --ds-color-accent: light-dark(var(--ds-blue-600), var(--ds-blue-400));
+  --ds-color-accent-hover: light-dark(var(--ds-blue-700), var(--ds-blue-300));
+  --ds-color-on-accent: light-dark(var(--ds-gray-0), var(--ds-gray-950));
+  --ds-color-danger: light-dark(var(--ds-red-600), var(--ds-red-400));
+  --ds-color-focus-ring: light-dark(var(--ds-blue-500), var(--ds-blue-400));
+}
+
+/* ========================================
+   4. テーマの切り替え
+   ----------------------------------------
+   ・何も指定しない：OS の設定（ライト／ダーク）に合わせる
+   ・data-theme="light" / "dark"：その範囲を固定する（ページ全体でも、一部の要素でもよい）
+   ======================================== */
+:root {
+  color-scheme: light dark;
+}
+
 [data-theme="light"] {
   color-scheme: light;
-  --ds-color-bg: var(--ds-gray-0);
-  --ds-color-bg-subtle: var(--ds-gray-100);
-  --ds-color-fg: var(--ds-gray-900);
-  --ds-color-fg-muted: var(--ds-gray-500);
-  --ds-color-border: var(--ds-gray-200);
-  --ds-color-accent: var(--ds-blue-600);
-  --ds-color-accent-hover: var(--ds-blue-700);
-  --ds-color-on-accent: var(--ds-gray-0);
-  --ds-color-danger: var(--ds-red-600);
-  --ds-color-focus-ring: var(--ds-blue-500);
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --ds-color-bg: var(--ds-gray-950);
-  --ds-color-bg-subtle: var(--ds-gray-800);
-  --ds-color-fg: var(--ds-gray-50);
-  --ds-color-fg-muted: var(--ds-gray-300);
-  --ds-color-border: var(--ds-gray-700);
-  --ds-color-accent: var(--ds-blue-400);
-  --ds-color-accent-hover: var(--ds-blue-300);
-  --ds-color-on-accent: var(--ds-gray-950);
-  --ds-color-danger: var(--ds-red-400);
-  --ds-color-focus-ring: var(--ds-blue-400);
 }

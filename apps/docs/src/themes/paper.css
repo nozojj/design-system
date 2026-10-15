@@ -1,0 +1,28 @@
+/* ========================================
+   別テーマの例：Paper
+   ----------------------------------------
+   役割トークンの値だけを差し替えたテーマ。部品やページの CSS は変えない。
+   data-brand="paper" を付けた範囲に効く（:root に書けばサイト全体に効く）。
+   ライト／ダークの切り替えは既定テーマと同じく color-scheme に任せる。
+   中で data-theme を切り替えても値を決め直せるよう、[data-theme] にも書く。
+   ======================================== */
+[data-brand="paper"],
+[data-brand="paper"] [data-theme] {
+  --ds-color-canvas: light-dark(#f4efe6, #1a1712);
+  --ds-color-surface: light-dark(#fffaf2, #24201a);
+  --ds-color-surface-sunken: light-dark(#e9e1d3, #2e2921);
+  --ds-color-line: light-dark(#d6cbb8, #3d362b);
+
+  --ds-color-ink: light-dark(#1d1a16, #f1ebe0);
+  --ds-color-ink-muted: light-dark(#625a4e, #b3a993);
+  --ds-color-on-ink: light-dark(#fffaf2, #1d1a16);
+
+  --ds-role-give: light-dark(#b8361a, #ff8a66);
+  --ds-role-on-give: light-dark(#fffaf2, #2a0a02);
+  --ds-role-receive: light-dark(#1f6b52, #6fd3a8);
+  --ds-role-on-receive: light-dark(#fffaf2, #06261a);
+
+  /* 見出しだけ明朝にする。本文と操作の書体は既定のまま */
+  --ds-font-display:
+    "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+}

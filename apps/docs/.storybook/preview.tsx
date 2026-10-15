@@ -12,6 +12,7 @@ const preview: Preview = {
         items: [
           { value: "light", title: "Light" },
           { value: "dark", title: "Dark" },
+          { value: "system", title: "System（OS に合わせる）" },
         ],
         dynamicTitle: true,
       },
@@ -22,7 +23,12 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => {
-      document.documentElement.dataset.theme = context.globals.theme;
+      // System のときは data-theme を外し、tokens.css の OS 追従に任せる
+      if (context.globals.theme === "system") {
+        delete document.documentElement.dataset.theme;
+      } else {
+        document.documentElement.dataset.theme = context.globals.theme;
+      }
       document.body.style.backgroundColor = "var(--ds-color-bg)";
       return <Story />;
     },
