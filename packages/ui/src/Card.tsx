@@ -11,11 +11,14 @@ function CardRoot({ as = "div", className, ...props }: CardProps) {
   return <Element {...props} className={classes} />;
 }
 
-export type CardTitleProps = ComponentPropsWithRef<"h3">;
+export type CardTitleProps = ComponentPropsWithRef<"h3"> & {
+  as?: "h2" | "h3" | "h4" | "h5" | "h6";
+};
 
-function CardTitle({ className, ...props }: CardTitleProps) {
+function CardTitle({ as = "h3", className, ...props }: CardTitleProps) {
   const classes = ["ds-card__title", className].filter(Boolean).join(" ");
-  return <h3 {...props} className={classes} />;
+  const Heading = as;
+  return <Heading {...props} className={classes} />;
 }
 
 export const Card = Object.assign(CardRoot, { Title: CardTitle });
