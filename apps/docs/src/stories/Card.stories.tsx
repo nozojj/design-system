@@ -22,7 +22,7 @@ const meta = {
   ),
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: 360 }}>
+      <div style={{ maxWidth: 360, padding: 24, background: "var(--ds-color-canvas)" }}>
         <Story />
       </div>
     ),
