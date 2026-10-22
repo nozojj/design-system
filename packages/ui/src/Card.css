@@ -1,0 +1,23 @@
+.ds-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-5);
+  border-radius: var(--ds-radius-lg);
+  background-color: var(--ds-color-surface);
+  color: var(--ds-color-ink);
+  font-family: var(--ds-font-ui);
+  font-size: var(--ds-font-size-md);
+  line-height: 1.7;
+}
+
+.ds-card > * {
+  margin: 0;
+}
+
+.ds-card__title {
+  font-family: var(--ds-font-display);
+  font-size: var(--ds-font-size-lg);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: 1.3;
+}
