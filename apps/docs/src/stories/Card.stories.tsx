@@ -38,9 +38,23 @@ export const Article: Story = {
   args: { as: "article" },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    // 見出しの文字で article を見つけられる = aria-labelledby で結び付いている// 見出しの文字で article を見つけられる = aria-labelledby で結び付いている
+    // 見出しの文字で article を見つけられる = aria-labelledby で結び付いている
     const card = canvas.getByRole("article", { name: "Halden Low Table" });
     await expect(card).toBeInTheDocument();
+  },
+};
+
+export const ArticleWithoutTitle: Story = {
+  args: { as: "article" },
+  render: (args) => (
+    <Card {...args}>
+      <p>年末年始は発送をお休みします。</p>
+    </Card>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // Title がないときは、存在しない id を指さないよう aria-labelledby を付けない
+    const card = canvas.getByRole("article");
+    await expect(card).not.toHaveAttribute("aria-labelledby");
   },
 };

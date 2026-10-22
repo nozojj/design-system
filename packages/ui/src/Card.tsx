@@ -1,12 +1,19 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useId,
+  useState,
   type ComponentPropsWithRef,
 } from "react";
 import "./Card.css";
 
-const CardContext = createContext<string | undefined>(undefined);
+type CardContextValue = {
+  titleId: string;
+  setHasTitle: (hasTitle: boolean) => void;
+};
+
+const CardContext = createContext<CardContextValue | undefined>(undefined);
 
 export type CardProps = ComponentPropsWithRef<"div"> & {
   as?: "div" | "article" | "section";
@@ -14,12 +21,14 @@ export type CardProps = ComponentPropsWithRef<"div"> & {
 
 function CardRoot({ as = "div", className, ...props }: CardProps) {
   const titleId = useId();
+  const [hasTitle, setHasTitle] = useState(false);
   const classes = ["ds-card", className].filter(Boolean).join(" ");
   const Element = as;
+  const isLabelled = as !== "div" && hasTitle;
   return (
-    <CardContext value={titleId}>
+    <CardContext value={{ titleId, setHasTitle }}>
       <Element
-        aria-labelledby={as === "div" ? undefined : titleId}
+        aria-labelledby={isLabelled ? titleId : undefined}
         {...props}
         className={classes}
       />
@@ -32,10 +41,18 @@ export type CardTitleProps = ComponentPropsWithRef<"h3"> & {
 };
 
 function CardTitle({ as = "h3", className, ...props }: CardTitleProps) {
-  const titleId = useContext(CardContext);
+  const card = useContext(CardContext);
+  const setHasTitle = card?.setHasTitle;
+
+  useEffect(() => {
+    if (!setHasTitle) return;
+    setHasTitle(true);
+    return () => setHasTitle(false);
+  }, [setHasTitle]);
+
   const classes = ["ds-card__title", className].filter(Boolean).join(" ");
   const Heading = as;
-  return <Heading id={titleId} {...props} className={classes} />;
+  return <Heading id={card?.titleId} {...props} className={classes} />;
 }
 
 export const Card = Object.assign(CardRoot, { Title: CardTitle });
