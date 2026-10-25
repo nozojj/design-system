@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryObj, Decorator } from "@storybook/react-vite";
 import { AsymGrid, Card } from "@ds/ui";
+import { expect, within } from "storybook/test";
 
 const meta = {
   title: "Composition/AsymGrid",
@@ -48,4 +49,46 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const withWidth =
+  (width: string): Decorator =>
+  (Story) => (
+    <div style={{ inlineSize: width }}>
+      <Story />
+    </div>
+  );
+
 export const Default: Story = {};
+
+export const LargeSideEnd: Story = {
+  args: { largeSide: "end" },
+  decorators: [withWidth("64rem")],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const [halden, oak, ash] = canvas.getAllByRole("heading");
+
+    await expect([halden, oak, ash].map((h) => h.textContent)).toEqual([
+      "Halden Low Table",
+      "Oak Bench",
+      "Ash Shelf",
+    ]);
+
+    await expect(halden.getBoundingClientRect().left).toBeGreaterThan(
+      oak.getBoundingClientRect().left,
+    );
+  },
+};
+
+export const Narrow: Story = {
+  decorators: [withWidth("20rem")],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const [halden, oak, ash] = canvas.getAllByRole("heading");
+
+    const haldenTop = halden.getBoundingClientRect().top;
+    const oakTop = oak.getBoundingClientRect().top;
+    const ashTop = ash.getBoundingClientRect().top;
+
+    await expect(oakTop).toBeGreaterThan(haldenTop);
+    await expect(ashTop).toBe(oakTop);
+  },
+};
