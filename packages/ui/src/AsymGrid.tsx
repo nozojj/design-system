@@ -14,17 +14,22 @@ function AsymGridRoot({
   largeSide = "start",
   gap = "md",
   className,
-  ...props
+  children,
+  ...rest
 }: AsymGridProps) {
   const classes = ["ds-asym-grid", className].filter(Boolean).join(" ");
   return (
-    <div
-      {...props}
-      className={classes}
-      data-ratio={ratio}
-      data-large-side={largeSide}
-      data-gap={gap}
-    />
+    <div className="ds-asym-grid-container">
+      <div
+        {...rest}
+        className={classes}
+        data-ratio={ratio}
+        data-large-side={largeSide}
+        data-gap={gap}
+      >
+        {children}
+      </div>
+    </div>
   );
 }
 
