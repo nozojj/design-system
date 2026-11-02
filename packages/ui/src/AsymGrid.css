@@ -1,0 +1,66 @@
+/* ---------- 外側：幅を測る箱 ---------- */
+.ds-asym-grid-container {
+  container-type: inline-size;
+}
+
+/* ---------- 基本（狭いとき） ---------- */
+.ds-asym-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* ---------- 余白 ---------- */
+.ds-asym-grid[data-gap="sm"] {
+  gap: var(--ds-space-2);
+}
+.ds-asym-grid[data-gap="md"] {
+  gap: var(--ds-space-4);
+}
+.ds-asym-grid[data-gap="lg"] {
+  gap: var(--ds-space-6);
+}
+
+/* ---------- 子 ---------- */
+.ds-asym-grid__item {
+  /* 中の Card をマスの高さいっぱいに伸ばす */
+  display: grid;
+}
+
+.ds-asym-grid__item[data-span="large"] {
+  grid-column: 1 / -1;
+}
+
+/* ---------- 広いとき ---------- */
+@container (width >= 48rem) {
+  .ds-asym-grid[data-ratio="3:2"] {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+  .ds-asym-grid[data-ratio="2:1"] {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+  .ds-asym-grid[data-ratio="3:1"] {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  }
+
+  .ds-asym-grid__item[data-span="large"] {
+    grid-column: auto;
+    grid-row: span 2;
+  }
+
+  /* 大きい子を終わり側に置く */
+  .ds-asym-grid[data-large-side="end"] {
+    grid-auto-flow: dense;
+  }
+  .ds-asym-grid[data-large-side="end"][data-ratio="3:2"] {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+  .ds-asym-grid[data-large-side="end"][data-ratio="2:1"] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+  .ds-asym-grid[data-large-side="end"][data-ratio="3:1"] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  }
+  .ds-asym-grid[data-large-side="end"] > [data-span="large"] {
+    grid-column: 2;
+  }
+}
